@@ -308,3 +308,476 @@
   background: #00A86B;
   border-radius: 3px;
 }
+
+/* ══════════════════════════════════════
+   SMOOTH SCROLL — global
+══════════════════════════════════════ */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ══════════════════════════════════════
+   PAGE LOAD FADE-IN
+══════════════════════════════════════ */
+@keyframes page-enter {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+body {
+  animation: page-enter 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ══════════════════════════════════════
+   SCROLL-DRIVEN REVEAL ANIMATIONS
+   Uses CSS animation-timeline: view()
+   (Chrome 115+, Edge 115+, Safari 18+)
+══════════════════════════════════════ */
+
+/* Fade + slide up on scroll */
+@keyframes scroll-fade-up {
+  from { opacity: 0; transform: translateY(48px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Fade + scale on scroll */
+@keyframes scroll-pop {
+  from { opacity: 0; transform: scale(0.93) translateY(24px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* Slide from left on scroll */
+@keyframes scroll-slide-left {
+  from { opacity: 0; transform: translateX(-40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* Slide from right on scroll */
+@keyframes scroll-slide-right {
+  from { opacity: 0; transform: translateX(40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* Apply scroll-reveal to cards and sections */
+/* Vision & Team page sections */
+main > section {
+  animation: scroll-fade-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-timeline: view();
+  animation-range: entry 0% entry 40%;
+}
+
+/* Glass card containers */
+main > section > div > div[class*="rounded-[2rem]"],
+main > section > div > div[class*="rounded-[3rem]"] {
+  animation: scroll-pop 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-timeline: view();
+  animation-range: entry 0% entry 45%;
+}
+
+/* Grid items — staggered with nth-child */
+main .grid > div:nth-child(1) {
+  animation: scroll-fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-timeline: view();
+  animation-range: entry 0% entry 50%;
+}
+main .grid > div:nth-child(2) {
+  animation: scroll-fade-up 0.7s 0.1s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-timeline: view();
+  animation-range: entry 0% entry 50%;
+}
+main .grid > div:nth-child(3) {
+  animation: scroll-fade-up 0.7s 0.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-timeline: view();
+  animation-range: entry 0% entry 50%;
+}
+main .grid > div:nth-child(4) {
+  animation: scroll-fade-up 0.7s 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-timeline: view();
+  animation-range: entry 0% entry 50%;
+}
+main .grid > div:nth-child(5) {
+  animation: scroll-fade-up 0.7s 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-timeline: view();
+  animation-range: entry 0% entry 50%;
+}
+main .grid > div:nth-child(6) {
+  animation: scroll-fade-up 0.7s 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-timeline: view();
+  animation-range: entry 0% entry 50%;
+}
+
+/* ══════════════════════════════════════
+   GLOBAL SMOOTH TRANSITIONS
+══════════════════════════════════════ */
+
+/* All interactive elements get smooth baseline transitions */
+a, button {
+  transition-property: color, background-color, border-color, box-shadow, transform, opacity;
+  transition-duration: 300ms;
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Smooth image rendering */
+img {
+  image-rendering: auto;
+}
+
+/* Link navigation transitions */
+a[href] {
+  text-decoration: none;
+}
+
+/* ══════════════════════════════════════
+   REDUCED MOTION SAFETY
+══════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ══════════════════════════════════════
+   SCROLL PROGRESS BAR (top of page)
+══════════════════════════════════════ */
+@keyframes scroll-progress {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #00A86B, #00d4a0, #00A86B);
+  background-size: 200% auto;
+  transform-origin: left center;
+  z-index: 9999;
+  animation: scroll-progress linear both,
+             gradient-flow 3s ease infinite;
+  animation-timeline: scroll(), auto;
+  animation-range: 0% 100%;
+  border-radius: 0 2px 2px 0;
+}
+
+/* ══════════════════════════════════════
+   NAVBAR — gains shadow + blur on scroll
+══════════════════════════════════════ */
+@keyframes nav-shadow-in {
+  from { box-shadow: none; background-color: rgba(255,255,255,0.5); }
+  to   { box-shadow: 0 4px 30px rgba(0,168,107,0.1), 0 1px 0 rgba(255,255,255,0.8); background-color: rgba(255,255,255,0.85); }
+}
+
+nav {
+  animation: nav-shadow-in linear both;
+  animation-timeline: scroll();
+  animation-range: 0px 120px;
+}
+
+/* ══════════════════════════════════════
+   BLUR-IN REVEAL — for headings and text
+══════════════════════════════════════ */
+@keyframes blur-in {
+  from { opacity: 0; filter: blur(12px); transform: translateY(20px); }
+  to   { opacity: 1; filter: blur(0px);  transform: translateY(0); }
+}
+
+@keyframes clip-wipe {
+  from { clip-path: inset(0 100% 0 0); opacity: 0; }
+  to   { clip-path: inset(0 0% 0 0);   opacity: 1; }
+}
+
+/* Apply blur-in to h1 and h2 in main sections */
+main section h1 {
+  animation: blur-in 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-timeline: view();
+  animation-range: entry 0% entry 35%;
+}
+
+main section h2 {
+  animation: blur-in 0.9s 0.1s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-timeline: view();
+  animation-range: entry 0% entry 40%;
+}
+
+/* Paragraph text fade in */
+main section p {
+  animation: scroll-fade-up 0.8s 0.15s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-timeline: view();
+  animation-range: entry 0% entry 45%;
+}
+
+/* ══════════════════════════════════════
+   ALTERNATING CARD REVEALS
+   Even children slide from right, odd from left
+══════════════════════════════════════ */
+main .grid > div:nth-child(odd) {
+  animation: scroll-slide-left 0.75s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-timeline: view();
+  animation-range: entry 0% entry 55%;
+}
+
+main .grid > div:nth-child(even) {
+  animation: scroll-slide-right 0.75s 0.08s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-timeline: view();
+  animation-range: entry 0% entry 55%;
+}
+
+/* ══════════════════════════════════════
+   FLEX-ROW CARD REVEALS (Pillar and feature rows)
+══════════════════════════════════════ */
+.flex.flex-col.md\:flex-row > div:nth-child(1) {
+  animation: scroll-slide-left 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-timeline: view();
+  animation-range: entry 0% entry 50%;
+}
+.flex.flex-col.md\:flex-row > div:nth-child(2) {
+  animation: scroll-fade-up 0.7s 0.1s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-timeline: view();
+  animation-range: entry 0% entry 50%;
+}
+.flex.flex-col.md\:flex-row > div:nth-child(3) {
+  animation: scroll-slide-right 0.7s 0.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-timeline: view();
+  animation-range: entry 0% entry 50%;
+}
+
+/* ══════════════════════════════════════
+   PARALLAX DEPTH — hero section shifts
+   slightly slower than scroll speed
+══════════════════════════════════════ */
+@keyframes parallax-slow {
+  from { transform: translateY(0px); }
+  to   { transform: translateY(-60px); }
+}
+
+section:first-of-type > div {
+  animation: parallax-slow linear both;
+  animation-timeline: scroll();
+  animation-range: 0% 50%;
+}
+
+/* ══════════════════════════════════════
+   SMOOTH HOVER LIFTS — cards feel physical
+══════════════════════════════════════ */
+main .grid > div,
+main .flex > div {
+  will-change: transform;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ══════════════════════════════════════
+   BADGE / EYEBROW CLIP-WIPE REVEAL
+══════════════════════════════════════ */
+main div[class*="tracking-[0.25em]"],
+main div[class*="tracking-[0.35em]"] {
+  animation: clip-wipe 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-timeline: view();
+  animation-range: entry 0% entry 30%;
+}
+
+/* ══════════════════════════════════════
+   STAT NUMBERS — scale-in from small
+══════════════════════════════════════ */
+@keyframes count-in {
+  from { opacity: 0; transform: scale(0.6) translateY(20px); letter-spacing: -0.5em; }
+  to   { opacity: 1; transform: scale(1) translateY(0);      letter-spacing: inherit; }
+}
+
+/* ══════════════════════════════════════
+   IMAGE PANEL — subtle parallax push
+══════════════════════════════════════ */
+@keyframes image-parallax {
+  from { transform: translateY(0px) scale(2); }
+  to   { transform: translateY(-40px) scale(2); }
+}
+
+/* ══════════════════════════════════════
+   LINK UNDERLINE — animated draw
+══════════════════════════════════════ */
+nav a span,
+nav button span {
+  transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ══════════════════════════════════════
+   INTERSECTION OBSERVER REVEAL CLASSES
+══════════════════════════════════════ */
+@keyframes io-fade-up {
+  from { opacity: 0; transform: translateY(36px); filter: blur(6px); }
+  to   { opacity: 1; transform: translateY(0);    filter: blur(0); }
+}
+@keyframes io-fade-left {
+  from { opacity: 0; transform: translateX(-36px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes io-fade-right {
+  from { opacity: 0; transform: translateX(36px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes io-scale-in {
+  from { opacity: 0; transform: scale(0.88); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.will-reveal {
+  opacity: 0;
+}
+.will-reveal.in-view {
+  animation: io-fade-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Stagger for siblings inside revealed containers */
+.in-view + .will-reveal { animation-delay: 0.08s; }
+.in-view + .will-reveal + .will-reveal { animation-delay: 0.16s; }
+.in-view + .will-reveal + .will-reveal + .will-reveal { animation-delay: 0.24s; }
+
+/* ══════════════════════════════════════
+   SHIMMER TEXT EFFECT
+   Add class .text-shimmer to any heading
+══════════════════════════════════════ */
+@keyframes text-shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
+
+.text-shimmer {
+  background: linear-gradient(
+    90deg,
+    #0a1628 0%,
+    #00A86B 30%,
+    #00d4a0 50%,
+    #00A86B 70%,
+    #0a1628 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: text-shimmer 4s linear infinite;
+}
+
+/* ══════════════════════════════════════
+   GRADIENT BORDER ANIMATION for cards
+   Add class .gradient-border to any card
+══════════════════════════════════════ */
+@keyframes border-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.gradient-border {
+  position: relative;
+}
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: conic-gradient(
+    from 0deg,
+    #00A86B,
+    #00d4a0,
+    transparent,
+    transparent,
+    #00A86B
+  );
+  opacity: 0;
+  transition: opacity 0.4s;
+  z-index: -1;
+  animation: border-spin 4s linear infinite;
+}
+.gradient-border:hover::before {
+  opacity: 1;
+}
+
+/* ══════════════════════════════════════
+   FLOATING PARTICLES (CSS only)
+   Add class .particles to a container,
+   particles auto-generated via ::before/after
+══════════════════════════════════════ */
+@keyframes rise {
+  0%   { transform: translateY(0) scale(1); opacity: 0.7; }
+  100% { transform: translateY(-120px) scale(0.3); opacity: 0; }
+}
+
+/* ══════════════════════════════════════
+   3D TILT SUPPORT
+   [data-tilt] elements get perspective
+══════════════════════════════════════ */
+[data-tilt] {
+  transform-style: preserve-3d;
+  transform: perspective(800px);
+  will-change: transform;
+  transition: transform 0.12s linear;
+}
+
+/* ══════════════════════════════════════
+   MAGNETIC BUTTON BASELINE
+══════════════════════════════════════ */
+a[href], button {
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 0.3s,
+              box-shadow 0.3s,
+              color 0.3s,
+              border-color 0.3s !important;
+}
+
+/* ══════════════════════════════════════
+   STAGGERED GRID CARD REVEAL
+══════════════════════════════════════ */
+main .grid > div:nth-child(1) { animation-delay: 0s; }
+main .grid > div:nth-child(2) { animation-delay: 0.08s; }
+main .grid > div:nth-child(3) { animation-delay: 0.16s; }
+main .grid > div:nth-child(4) { animation-delay: 0.24s; }
+main .grid > div:nth-child(5) { animation-delay: 0.32s; }
+main .grid > div:nth-child(6) { animation-delay: 0.40s; }
+
+/* ══════════════════════════════════════
+   FOCUS-VISIBLE RING (accessibility)
+══════════════════════════════════════ */
+:focus-visible {
+  outline: 2px solid #00A86B;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ══════════════════════════════════════
+   SELECTION COLOR
+══════════════════════════════════════ */
+::selection {
+  background: rgba(0, 168, 107, 0.25);
+  color: #0a1628;
+}
+
+/* ══════════════════════════════════════
+   LOADING SKELETON shimmer (utility)
+══════════════════════════════════════ */
+@keyframes skeleton {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+.skeleton {
+  background: linear-gradient(90deg, #e8f5ef 25%, #d0ece2 50%, #e8f5ef 75%);
+  background-size: 200% 100%;
+  animation: skeleton 1.5s ease infinite;
+  border-radius: 8px;
+}
+
+/* ══════════════════════════════════════
+   REDUCED MOTION SAFETY
+══════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

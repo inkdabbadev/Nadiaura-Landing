@@ -1,4 +1,9 @@
 import Image from 'next/image';
+import Link from 'next/link';
+import Navbar from './components/Navbar';
+
+const WHATSAPP_URL =
+  'https://wa.me/919940183984?text=Hello%2C%0AI%20would%20love%20to%20experience%20the%20Third%20Eye%20for%20my%20family.%0APlease%20grant%20me%20access%20to%20Nadia%20Aura.';
 
 export default function Home() {
   return (
@@ -43,30 +48,7 @@ export default function Home() {
         <div className="absolute inset-0 backdrop-blur-[50px] bg-white/55" />
       </div>
 
-      {/* ════════════════════════════════════════
-          NAVBAR
-      ════════════════════════════════════════ */}
-      <nav className="fixed top-0 left-0 right-0 h-[72px] flex items-center justify-between px-6 md:px-20 bg-white/70 backdrop-blur-xl border-b border-[rgba(0,168,107,0.1)] z-[1000] animate-slide-left">
-        {/* Logo */}
-        <div className="flex items-center gap-2.5 text-[1.2rem] md:text-[1.4rem] font-black text-[#0a1628] tracking-tight">
-          Nadiaura Ai
-        </div>
-        {/* Nav Links */}
-        <div className="flex items-center gap-4 md:gap-8 animate-slide-right delay-200">
-          <button className="hidden md:block text-[0.95rem] font-black uppercase tracking-widest text-[#5a738a] hover:text-[#00A86B] transition-colors duration-300 bg-transparent border-none cursor-pointer relative group/link">
-            Vision
-            <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-[#00A86B] transition-all duration-300 group-hover/link:w-full rounded-full blur-[1px]"></span>
-          </button>
-          <button className="hidden md:block text-[0.95rem] font-black uppercase tracking-widest text-[#5a738a] hover:text-[#00A86B] transition-colors duration-300 bg-transparent border-none cursor-pointer relative group/link">
-            Team
-            <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-[#00A86B] transition-all duration-300 group-hover/link:w-full rounded-full blur-[1px]"></span>
-          </button>
-          <button className="relative bg-[#00A86B] hover:bg-[#00c97e] text-white px-6 py-2.5 md:px-8 md:py-3 rounded-full font-black text-[0.9rem] md:text-[0.95rem] shadow-[0_4px_16px_rgba(0,168,107,0.25)] hover:shadow-[0_8px_24px_rgba(0,168,107,0.4)] transition-all duration-300 border-none cursor-pointer overflow-hidden group/btn hover:-translate-y-0.5">
-            <div className="absolute inset-0 w-[50%] h-[200%] bg-gradient-to-r from-transparent via-white/20 to-transparent -rotate-45 -translate-y-1/2 -translate-x-[150%] group-hover/btn:translate-x-[250%] transition-transform duration-700 ease-in-out z-10" />
-            <span className="relative z-10">Join Waitlist</span>
-          </button>
-        </div>
-      </nav>
+      <Navbar active="home" />
 
       {/* ════════════════════════════════════════
           HERO
@@ -112,16 +94,19 @@ export default function Home() {
 
           {/* CTA */}
           <div className="flex flex-col sm:flex-row items-center gap-4 md:gap-6 w-full sm:w-auto animate-fade-up delay-800">
-            <button className="relative w-full sm:w-auto bg-[#0a1628] text-white px-9 md:px-11 py-4 md:py-5 rounded-xl font-black text-[1rem] md:text-[1.05rem] hover:-translate-y-1 hover:bg-[#00A86B] transition-all duration-300 border-none cursor-pointer overflow-hidden group/cta shadow-[0_10px_30px_rgba(0,168,107,0.15)] hover:shadow-[0_20px_45px_rgba(0,168,107,0.35)]">
+            <a
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="relative w-full sm:w-auto bg-[#0a1628] text-white px-9 md:px-11 py-4 md:py-5 rounded-xl font-black text-[1rem] md:text-[1.05rem] hover:-translate-y-1 hover:bg-[#00A86B] transition-all duration-300 overflow-hidden group/cta shadow-[0_10px_30px_rgba(0,168,107,0.15)] hover:shadow-[0_20px_45px_rgba(0,168,107,0.35)] inline-flex items-center justify-center"
+            >
               <span className="relative z-10 flex items-center gap-2.5">
                 Get Early Access
                 <span className="group-hover/cta:translate-x-1 transition-transform duration-300">→</span>
               </span>
-              {/* Refraction sweep */}
               <div className="absolute inset-0 w-[40%] h-[200%] bg-gradient-to-r from-transparent via-white/20 to-transparent -rotate-45 -translate-y-1/2 -translate-x-[200%] group-hover/cta:translate-x-[350%] transition-transform duration-700 ease-in-out z-20" />
-              {/* Edge highlight – static top border */}
               <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/60 to-transparent" />
-            </button>
+            </a>
           </div>
 
           {/* Stats – Glass Cards */}
@@ -194,7 +179,7 @@ export default function Home() {
 
             {/* Description */}
             <p className="text-[1.05rem] md:text-[1.2rem] leading-[1.75] md:leading-[1.85] mb-14 md:mb-20 text-[#5a738a] font-medium max-w-[700px] mx-auto">
-              Nadiaura notices what families miss — before it becomes a crisis.
+              Nadiaura notices what families miss before it becomes a crisis.
               The AI companion that keeps watch over your physical, emotional, and financial wellbeing.
             </p>
 
@@ -263,16 +248,18 @@ export default function Home() {
                   className="relative w-full bg-white/90 backdrop-blur-xl border border-white shadow-[0_10px_20px_rgba(0,168,107,0.04),inset_0_1px_5px_rgba(0,0,0,0.01)] px-6 py-4 md:px-7 md:py-5 rounded-2xl text-[1.05rem] text-[#0a1628] outline-none placeholder:text-[#aab8c6] focus:border-[#00A86B] transition-all font-medium z-10"
                 />
               </div>
-              <button
-                type="button"
-                className="relative w-full md:w-auto bg-[#0a1628] text-white px-8 py-4 md:px-10 md:py-5 rounded-2xl font-black text-[1rem] shadow-[inset_0_1px_1px_rgba(255,255,255,0.2),0_15px_30px_rgba(0,0,0,0.15)] hover:-translate-y-1 hover:bg-[#00A86B] hover:shadow-[0_20px_40px_rgba(0,168,107,0.4)] transition-all whitespace-nowrap border-none cursor-pointer flex items-center justify-center gap-2 overflow-hidden group/btn"
+              <a
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="relative w-full md:w-auto bg-[#0a1628] text-white px-8 py-4 md:px-10 md:py-5 rounded-2xl font-black text-[1rem] shadow-[inset_0_1px_1px_rgba(255,255,255,0.2),0_15px_30px_rgba(0,0,0,0.15)] hover:-translate-y-1 hover:bg-[#00A86B] hover:shadow-[0_20px_40px_rgba(0,168,107,0.4)] transition-all whitespace-nowrap overflow-hidden group/btn inline-flex items-center justify-center gap-2"
               >
                 <div className="absolute inset-0 w-[50%] h-[200%] bg-gradient-to-r from-transparent via-white/20 to-transparent -rotate-45 -translate-y-1/2 -translate-x-[150%] group-hover/btn:translate-x-[250%] transition-transform duration-1000 ease-in-out z-20" />
                 <span className="relative z-10 flex items-center gap-2">
                   Notify Me
                   <span className="group-hover/btn:translate-x-1 transition-transform">→</span>
                 </span>
-              </button>
+              </a>
             </div>
           </div>
         </div>
